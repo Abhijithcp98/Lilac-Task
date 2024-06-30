@@ -12,7 +12,11 @@ class StudentOptedCourseModel extends CI_Model {
         $this->db->join('tbl_course', 'tbl_course.id = tbl_student_opted_course.course_id');
     
         if ($searchTerm) {
+            $this->db->group_start();
             $this->db->like('tbl_student.name', $searchTerm);
+            $this->db->or_like('tbl_parent.name', $searchTerm);
+            $this->db->or_like('tbl_course.courseName', $searchTerm);
+            $this->db->group_end();
         }
     
         return $this->db->count_all_results();
@@ -26,7 +30,11 @@ class StudentOptedCourseModel extends CI_Model {
         $this->db->join('tbl_course', 'tbl_course.id = tbl_student_opted_course.course_id');
         
         if ($searchTerm) {
+            $this->db->group_start();
             $this->db->like('tbl_student.name', $searchTerm);
+            $this->db->or_like('tbl_parent.name', $searchTerm);
+            $this->db->or_like('tbl_course.courseName', $searchTerm);
+            $this->db->group_end();
         }
     
         $this->db->order_by('tbl_student.name', 'ASC');
